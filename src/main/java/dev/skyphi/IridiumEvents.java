@@ -5,6 +5,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.skyphi.Database.DatabaseManager;
+import dev.skyphi.Commands.StatisticCommand;
 import dev.skyphi.Database.Database;
 import dev.skyphi.Database.SQLiteDatabase;
 
@@ -32,9 +33,7 @@ public class IridiumEvents extends JavaPlugin {
             getLogger().warning("PlaceholderAPI not found. Placeholders will not be updated.");
         }
 
-        // this.getCommand("cmd").setExecutor(new aCommand());
-
-        // getServer().getPluginManager().registerEvents(new FallListener(), INSTANCE);
+        this.getCommand("statistic").setExecutor(new StatisticCommand());
     }
 
     @Override

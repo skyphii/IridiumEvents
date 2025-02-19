@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -99,7 +101,7 @@ public class SQLiteDatabase implements Database {
 
     // ** Statistics ** //
 
-    public void addStatistic(String source, UUID playerUUID, String statistic, long value) {
+    public void addStatistic(String source, String statistic, UUID playerUUID, long value) {
         String tableName = source + "_statistics";
 
         createTableIfNotExists(tableName);
@@ -148,6 +150,75 @@ public class SQLiteDatabase implements Database {
         return statistics;
     }
 
+    @Override
+    public long getStatistic(String source, String statistic, UUID playerUUID) {
+        String tableName = source + "_statistics";
+
+        try (Connection connection = getConnection()) {
+            String query = "SELECT " + statistic + " FROM " + tableName + " WHERE player_uuid = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, playerUUID.toString());
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong(statistic);
+                }
+            }
+        } catch (SQLException e) {
+            if (e.getMessage().contains("no such column")) {
+                return -1;
+            } else e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public List<String> getStatisticsTableNames() {
+        List<String> tableNames = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT name FROM sqlite_master WHERE type='table' AND name LIKE ?")) {
+            statement.setString(1, "%_statistics");
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String tableName = resultSet.getString("name");
+                    tableNames.add(tableName.substring(0, tableName.indexOf('_')));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tableNames;
+    }
+
+    @Override
+    public List<String> getStatisticsNames(String source) {
+        String tableName = source + "_statistics";
+        List<String> statNames = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT * FROM " + tableName + " LIMIT 0")) {
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                ResultSetMetaData meta = resultSet.getMetaData();
+                // start at index=2 because index=1 is the player UUID
+                for(int i = 2; i <= meta.getColumnCount(); i++) {
+                    statNames.add(meta.getColumnLabel(i));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return statNames;
+    }
+
+
     // ** Helper Methods ** //
 
     private boolean columnExists(String tableName, String columnName) {
@@ -178,6 +249,7 @@ public class SQLiteDatabase implements Database {
     }
 
     private void createTableIfNotExists(String tableName) {
+        tableName = tableName.toLowerCase();
         if (!tableExists(tableName)) {
             try (Connection connection = getConnection();
                     Statement statement = connection.createStatement()) {

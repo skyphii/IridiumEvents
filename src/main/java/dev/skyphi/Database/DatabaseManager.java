@@ -1,5 +1,6 @@
 package dev.skyphi.Database;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public class DatabaseManager implements IridiumAPI {
         this.database = database;
     }
 
+    // ** API Methods ** //
+
     @Override
     public void addPoints(UUID playerUUID, long points) {
         long newPoints = getPoints(playerUUID) + points;
@@ -25,13 +28,29 @@ public class DatabaseManager implements IridiumAPI {
     }
 
     @Override
-    public void addStatistic(String source, UUID playerUUID, String statistic, long value) {
-        database.addStatistic(source, playerUUID, statistic, value);
+    public void addStatistic(String source, String statistic, UUID playerUUID, long value) {
+        database.addStatistic(source, statistic, playerUUID, value);
     }
 
     @Override
     public Map<String, Integer> getStatistics(String source, UUID playerUUID) {
         return database.getStatistics(source, playerUUID);
+    }
+
+    @Override
+    public long getStatistic(String source, String statistic, UUID playerUUID) {
+        return database.getStatistic(source, statistic, playerUUID);
+    }
+
+
+    // ** Unexposed Methods ** //
+
+    public List<String> getStatisticsTableNames() {
+        return database.getStatisticsTableNames();
+    }
+
+    public List<String> getStatisticsNames(String source) {
+        return database.getStatisticsNames(source);
     }
 
 }

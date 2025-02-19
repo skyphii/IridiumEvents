@@ -5,8 +5,8 @@ api-version: 1.21
 main: dev.skyphi.IridiumEvents
 softdepend: ["PlaceholderAPI"]
 commands:
-  cmd:
-    description: An IridiumEvents command
-    usage: /<command>
+  statistic:
+    description: Gets a specific statistic for a given player
+    usage: /<command> <player> <source> <statistic>
     default: op
-    aliases: [cmd2]
+    aliases: [stat]
