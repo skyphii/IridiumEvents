@@ -1,0 +1,12 @@
+name: IridiumEvents
+author: skyphi
+version: 1.0
+api-version: 1.21
+main: dev.skyphi.IridiumEvents
+softdepend: ["PlaceholderAPI"]
+commands:
+  cmd:
+    description: An IridiumEvents command
+    usage: /<command>
+    default: op
+    aliases: [cmd2]
