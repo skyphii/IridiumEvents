@@ -27,13 +27,13 @@ public class SQLiteDatabase implements Database {
         try (Connection connection = getConnection();
             Statement statement = connection.createStatement()) {
 
-            // String createTableQuery = "CREATE TABLE IF NOT EXISTS player_data (" +
-            //         "player_uuid TEXT PRIMARY KEY, " +
-            //         "player_name TEXT NOT NULL, " +
-            //         "points INTEGER DEFAULT 0, " +
-            //         "last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
-            //         ")";
-            // statement.execute(createTableQuery);
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS player_data (" +
+                    "player_uuid TEXT PRIMARY KEY, " +
+                    "player_name TEXT NOT NULL, " +
+                    "points INTEGER DEFAULT 0, " +
+                    "last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                    ")";
+            statement.execute(createTableQuery);
 
         } catch (SQLException e) {
             e.printStackTrace();

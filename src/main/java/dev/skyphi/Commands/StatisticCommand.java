@@ -1,6 +1,7 @@
 package dev.skyphi.Commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -54,10 +55,8 @@ public class StatisticCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command arg1cmd, String s, String[] args) {
         final List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            for (Player player : IridiumEvents.INSTANCE.getServer().getOnlinePlayers()) {
-                String name = player.getName();
-                if (name.startsWith(args[0])) completions.add(name);
-            }
+            Collection<String> next = IridiumEvents.INSTANCE.getServer().getOnlinePlayers().stream().map(Player::getName).toList();
+            StringUtil.copyPartialMatches(args[0], next, completions);
         }
         if (args.length == 2) StringUtil.copyPartialMatches(args[1], IridiumEvents.DB.getStatisticsTableNames(), completions);
         if (args.length == 3) StringUtil.copyPartialMatches(args[2], IridiumEvents.DB.getStatisticsNames(args[1]), completions);
