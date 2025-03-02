@@ -8,6 +8,7 @@ import dev.skyphi.Database.DatabaseManager;
 import dev.skyphi.Commands.StatisticCommand;
 import dev.skyphi.Database.Database;
 import dev.skyphi.Database.SQLiteDatabase;
+import dev.skyphi.Services.PlaceholderService;
 
 public class IridiumEvents extends JavaPlugin {
 
@@ -28,7 +29,7 @@ public class IridiumEvents extends JavaPlugin {
         getServer().getServicesManager().register(IridiumAPI.class, DB, this, ServicePriority.Normal);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            // activate placeholder stuff
+            new PlaceholderService().register();
         } else {
             getLogger().warning("PlaceholderAPI not found. Placeholders will not be updated.");
         }
