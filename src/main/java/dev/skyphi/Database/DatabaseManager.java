@@ -33,7 +33,7 @@ public class DatabaseManager implements IridiumAPI {
     }
 
     @Override
-    public Map<String, Integer> getStatistics(String source, UUID playerUUID) {
+    public Map<String, Long> getStatistics(String source, UUID playerUUID) {
         return database.getStatistics(source, playerUUID);
     }
 

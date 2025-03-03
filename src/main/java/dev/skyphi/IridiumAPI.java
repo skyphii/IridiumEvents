@@ -39,7 +39,7 @@ public interface IridiumAPI {
      * @param playerUUID the player's UUID
      * @return a mapping of statistic key:value pairs
      */
-    public Map<String, Integer> getStatistics(String source, UUID playerUUID);
+    public Map<String, Long> getStatistics(String source, UUID playerUUID);
 
     /**
      * Gets a statistic from the specified source for a player

@@ -10,3 +10,6 @@ commands:
     usage: /<command> <player> <source> <statistic>
     default: op
     aliases: [stat]
+  points:
+    description: Gives or gets points
+    usage: /<command> <give/get> <player> [#]

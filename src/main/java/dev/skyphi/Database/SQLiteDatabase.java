@@ -78,7 +78,7 @@ public class SQLiteDatabase implements Database {
             statement.setString(1, playerUUID.toString());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getInt("points");
+                return resultSet.getLong("points");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,9 +122,9 @@ public class SQLiteDatabase implements Database {
     }
 
     @Override
-    public Map<String, Integer> getStatistics(String source, UUID playerUUID) {
+    public Map<String, Long> getStatistics(String source, UUID playerUUID) {
         String tableName = source + "_statistics";
-        Map<String, Integer> statistics = new HashMap<>();
+        Map<String, Long> statistics = new HashMap<>();
 
         try (Connection connection = getConnection()) {
             String query = "SELECT * FROM " + tableName + " WHERE player_uuid = ?";
@@ -138,7 +138,7 @@ public class SQLiteDatabase implements Database {
 
                 for (int i = 2; i <= columnCount; i++) { // Skip the first column (player_uuid)
                     String columnName = metaData.getColumnName(i);
-                    int value = resultSet.getInt(i);
+                    long value = resultSet.getLong(i);
                     statistics.put(columnName, value);
                 }
             }

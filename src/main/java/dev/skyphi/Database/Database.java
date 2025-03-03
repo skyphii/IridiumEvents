@@ -18,7 +18,7 @@ public interface Database {
     void updatePoints(String playerUUID, long points);
 
     void addStatistic(String source, String statistic, UUID playerUUID, long value);
-    Map<String, Integer> getStatistics(String source, UUID playerUUID);
+    Map<String, Long> getStatistics(String source, UUID playerUUID);
     long getStatistic(String source, String statistic, UUID playerUUID);
     
     List<String> getStatisticsTableNames();
