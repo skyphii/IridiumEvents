@@ -1,4 +1,4 @@
-package dev.skyphi.Database;
+package dev.skyphi.Databases;
 
 import java.sql.Connection;
 import java.sql.SQLException;

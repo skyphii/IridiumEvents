@@ -7,18 +7,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.skyphi.Commands.PointsCommand;
 import dev.skyphi.Commands.StatisticCommand;
-import dev.skyphi.Database.Database;
-import dev.skyphi.Database.DatabaseManager;
-import dev.skyphi.Database.SQLiteDatabase;
+import dev.skyphi.Databases.Database;
+import dev.skyphi.Databases.SQLiteDatabase;
+import dev.skyphi.Services.DatabaseService;
+import dev.skyphi.Services.IridiumAPI;
 import dev.skyphi.Services.PlaceholderService;
 
 public class IridiumEvents extends JavaPlugin {
+
     public static final String PREFIX = ChatColor.GOLD+""+ChatColor.BOLD + "["
                                         + ChatColor.AQUA+""+ChatColor.BOLD + "IridiumEvents"
                                         + ChatColor.GOLD+""+ChatColor.BOLD + "] ";
 
     public static IridiumEvents INSTANCE;
-    public static DatabaseManager DB;
+    public static DatabaseService DB;
     
     private Database database;
 
@@ -29,7 +31,7 @@ public class IridiumEvents extends JavaPlugin {
 
         database = new SQLiteDatabase();
         database.initDatabase();
-        DB = new DatabaseManager(database);
+        DB = new DatabaseService(database);
 
         getServer().getServicesManager().register(IridiumAPI.class, DB, this, ServicePriority.Normal);
 

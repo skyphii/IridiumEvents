@@ -1,4 +1,4 @@
-package dev.skyphi;
+package dev.skyphi.Services;
 
 import java.util.Map;
 import java.util.UUID;

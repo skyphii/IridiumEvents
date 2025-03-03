@@ -1,16 +1,16 @@
-package dev.skyphi.Database;
+package dev.skyphi.Services;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import dev.skyphi.IridiumAPI;
+import dev.skyphi.Databases.Database;
 
-public class DatabaseManager implements IridiumAPI {
+public class DatabaseService implements IridiumAPI {
     
     private Database database;
 
-    public DatabaseManager(Database database) {
+    public DatabaseService(Database database) {
         this.database = database;
     }
 
